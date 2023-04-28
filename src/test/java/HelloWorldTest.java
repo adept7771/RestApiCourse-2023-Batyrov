@@ -4,6 +4,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +20,8 @@ public class HelloWorldTest {
                 .queryParams(params)
                 .get("https://playground.learnqa.ru/api/hello")
                 .jsonPath();
-        response.prettyPrint();
 
+        response.prettyPrint();
 
         String answer = response.get("answer");
         System.out.println(answer);
@@ -165,5 +166,68 @@ public class HelloWorldTest {
                 .andReturn();
 
         response.print();
+    }
+
+    @Test
+    public void testHomeWork1() {
+        JsonPath jsonPath = RestAssured
+                .given()
+                .get("https://playground.learnqa.ru/api/get_json_homework")
+                .jsonPath();
+
+        jsonPath.prettyPrint();
+
+        Object messages = jsonPath.get("messages");
+
+        ArrayList<Object> messagesList = (ArrayList<Object>) messages;
+
+        Object secondMessage = messagesList.get(1);
+
+        System.out.println(secondMessage.toString());
+    }
+
+    @Test
+    public void testHomeWork2() {
+        Response response = RestAssured
+                .given()
+                .redirects()
+                .follow(true)
+                .get( "https://playground.learnqa.ru/api/long_redirect")
+                .andReturn();
+
+        String locationHeader = response.getHeader("X-Host");
+        System.out.println(locationHeader);
+    }
+
+    @Test
+    public void testHomeWork3() {
+
+        String urlToCall = "https://playground.learnqa.ru/api/long_redirect";
+        int statusCode = 0;
+
+        while (statusCode != 200){
+
+            System.out.println("Url to call: " + urlToCall);
+
+            Response response = RestAssured
+                    .given()
+                    .redirects()
+                    .follow(false)
+                    .get(urlToCall)
+                    .andReturn();
+
+            urlToCall = response.getHeader("Location");
+
+            if (urlToCall == null){
+                urlToCall = response.getHeader("X-Host");
+            }
+
+            statusCode = response.getStatusCode();
+        }
+    }
+
+    @Test
+    public void testHomeWork4() {
+
     }
 }
