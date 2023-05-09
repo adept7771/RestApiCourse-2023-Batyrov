@@ -1,3 +1,5 @@
+package oldTests;
+
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
@@ -7,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-public class HelloWorldTest {
+public class Lesson1_2 {
 
     @Test
     public void testRestAssured1() {
