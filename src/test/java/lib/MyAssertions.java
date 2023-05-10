@@ -13,4 +13,12 @@ public class MyAssertions {
         int value = response.jsonPath().getInt(name);
         Assertions.assertEquals(expectedValue, value);
     }
+
+    public static void assertResponseTextEquals(Response response, String expectedAnswer){
+        Assertions.assertEquals(expectedAnswer, response.asString());
+    }
+
+    public static void assertResponseCodeEquals(Response response, int expectedCode){
+        Assertions.assertEquals(expectedCode, response.getStatusCode());
+    }
 }

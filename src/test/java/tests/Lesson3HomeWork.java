@@ -32,10 +32,10 @@ public class Lesson3HomeWork extends BaseTestCase {
     @Test
     public void ex12HeadersTest() {
         Response response = RestAssured.given()
-                .get("https://playground.learnqa.ru/api/homework_cookie")
+                .get("https://playground.learnqa.ru/api/homework_header")
                 .andReturn();
 
-        Assertions.assertTrue(getHeader(response, "Set-Cookie").contains("HomeWork=hw_value"));
+        Assertions.assertTrue(getHeader(response, "x-secret-homework-header").contains("Some secret value"));
     }
 
     @ParameterizedTest
