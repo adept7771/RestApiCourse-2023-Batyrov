@@ -17,7 +17,8 @@ public class Lesson3HomeWork extends BaseTestCase {
 
     @Test
     public void ex10StringTest() {
-        Assertions.assertEquals("test", "test");
+        String testString = "123456789012345";
+        Assertions.assertTrue(testString.length() >= 15);
     }
 
     @Test
