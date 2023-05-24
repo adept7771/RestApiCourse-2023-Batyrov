@@ -36,6 +36,26 @@ public class Lesson4UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    public void testCreateUserWithExistedEmailUpdated(){
+
+        String email = "vinkotov@example.com";
+
+        Map<String, String > userData = new HashMap<>();
+
+        userData.put("email", email);
+        userData = DataGenerator.getRegistrationData(userData);
+
+        Response responseCreateAuth = RestAssured
+                .given()
+                .body(userData)
+                .post("https://playground.learnqa.ru/api/user/");
+
+        MyAssertions.assertResponseCodeEquals(responseCreateAuth, 400);
+        MyAssertions.assertResponseTextEquals(responseCreateAuth, "Users with email '" + email
+                + "' already exists");
+    }
+
+    @Test
     public void testCreateUserSuccessfully(){
 
         String email = DataGenerator.getRandomEmail();
@@ -47,6 +67,26 @@ public class Lesson4UserRegisterTest extends BaseTestCase {
         userData.put("username", "learnqa");
         userData.put("firstName", "learnqa");
         userData.put("lastName", "learnqa");
+
+        Response responseCreateAuth = RestAssured
+                .given()
+                .body(userData)
+                .post("https://playground.learnqa.ru/api/user/");
+
+        MyAssertions.assertResponseCodeEquals(responseCreateAuth, 200);
+        System.out.println(responseCreateAuth.asString());
+        MyAssertions.assertJsonHasField(responseCreateAuth, "id");
+    }
+
+    @Test
+    public void testCreateUserSuccessfullyUpdated(){
+
+        String email = DataGenerator.getRandomEmail();
+
+        Map<String, String > userData = new HashMap<>();
+
+        userData.put("email", email);
+        userData = DataGenerator.getRegistrationData(userData);
 
         Response responseCreateAuth = RestAssured
                 .given()

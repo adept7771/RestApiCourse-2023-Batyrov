@@ -1,5 +1,8 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -8,6 +11,7 @@ import lib.BaseTestCase;
 import lib.MyAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,6 +19,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
+@Epic("Authorisation cases")
+@Feature("Authorisation")
 public class Lesson3AuthTests extends BaseTestCase {
 
     String cookie, header;
@@ -38,6 +44,8 @@ public class Lesson3AuthTests extends BaseTestCase {
         this.userIdOnAuth = this.getIntFromJson(authResponse, "user_id");
     }
 
+    @Description("parametrizedExample testing")
+    @DisplayName("Test negative positive auth user")
     @ParameterizedTest
     @ValueSource(strings = {"", "John", "Pete"})
     public void parametrizedExample(String name) {
@@ -59,6 +67,8 @@ public class Lesson3AuthTests extends BaseTestCase {
     }
 
     @Test
+    @Description("User auth testing")
+    @DisplayName("Test positive auth user")
     public void userAuthTest(){
         JsonPath authCheckResponse = authResponse.jsonPath();
 

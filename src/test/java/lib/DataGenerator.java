@@ -28,7 +28,7 @@ public class DataGenerator {
 
         Map<String, String> userData = new HashMap<>();
 
-        String[] keys = {"username", "firstName", "lastName", "email"};
+        String[] keys = {"username", "firstName", "lastName", "email", "password"};
 
         for (String key : keys){
             if(nonDefaultValues.containsKey(key)){

@@ -58,8 +58,26 @@ public class Lesson3HomeWork extends BaseTestCase {
                 .header("User-Agent", userAgent)
                 .get("https://playground.learnqa.ru/ajax/api/user_agent_check").jsonPath();
 
-        Assertions.assertEquals(platform, jsonPath.get("platform"));
-        Assertions.assertEquals(browser, jsonPath.get("browser"));
-        Assertions.assertEquals(device, jsonPath.get("device"));
+        boolean platformIsCorrect = platform.equals(jsonPath.get("platform"));
+        boolean browserIsCorrect = browser.equals(jsonPath.get("browser"));
+        boolean deviceIsCorrect = device.equals(jsonPath.get("device"));
+
+        if (platformIsCorrect == false || browserIsCorrect == false || deviceIsCorrect == false){
+            System.out.println("Current user agent: " + userAgent);
+            if (platformIsCorrect == false){
+                System.out.println("Platform value: " + jsonPath.get("platform") + " (is wrong) | Expected value: " + platform);
+            }
+            if (browserIsCorrect == false){
+                System.out.println("browser value: " + jsonPath.get("browser") + " (is wrong) | Expected value: " + browser);
+            }
+            if (deviceIsCorrect == false){
+                System.out.println("device value: " + jsonPath.get("device") + " (is wrong) | Expected value: " + device);
+            }
+            Assertions.fail("Test failed with wrong values. Check the log.");
+        }
+        else {
+            System.out.println("Current user agent: " + userAgent);
+            System.out.println("All values is correct.");
+        }
     }
 }
